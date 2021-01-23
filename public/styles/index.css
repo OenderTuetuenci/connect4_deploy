@@ -1,0 +1,43 @@
+body {
+    background-color: darkgray;
+}
+#image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+#header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0.5ex;
+    margin-top: 0.5ex;
+}
+
+#welcome{
+    font-size:8ex;
+}
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 2.5ex;
+}
+.textHeader {
+    font-size: 5ex;
+    margin-bottom: 0.5ex;
+    margin-top: 0.5ex;
+    font-weight: 100;
+}
+
+#start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 3ex;
+}

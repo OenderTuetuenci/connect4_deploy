@@ -1,0 +1,34 @@
+@import play.api.i18n.Messages
+@import play.api.mvc.RequestHeader
+@import org.webjars.play.WebJarsUtil
+@import controllers.AssetsFinder
+@import play.api.data._
+@import forms.TotpSetupForm.Data
+@import com.mohiva.play.silhouette.impl.providers.GoogleTotpCredentials
+@import com.mohiva.play.silhouette.impl.providers.GoogleTotpInfo
+@import views.html.helper.CSPNonce
+
+@this()(implicit webJarsUtil: WebJarsUtil, assets: AssetsFinder)
+@(user: models.User, totpInfoOpt: Option[GoogleTotpInfo], totpDataOpt: Option[(Form[Data], GoogleTotpCredentials)] = None)(implicit request: RequestHeader, messages: Messages)
+
+@implicitFieldConstructor = @{
+    b4.vertical.fieldConstructor()
+}
+
+@main("Connect4",Some(user)){
+    <link rel="stylesheet" href='@assets.path("styles/connect4.css")' />
+            <div class="col">
+                <div class="row">
+                    @for(i <- 0 to 6) {
+                        <div class="col">
+                            <a id="b@i" class="btn btn-primary btn-block">@i</a>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <canvas id="mycanvas" class="grid"></canvas>
+                </div>
+            </div>
+    <script @{CSPNonce.attr} src='@assets.path("javascripts/jquery-3.2.1.min.js")'></script>
+    <script @{CSPNonce.attr} rel="text/javascripts" src='@assets.path("javascripts/grid.js")'></script>
+}
