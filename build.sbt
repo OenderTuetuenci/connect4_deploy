@@ -3,6 +3,8 @@ import com.typesafe.sbt.SbtScalariform._
 import scalariform.formatter.preferences._
 
 name := "connect4_deploy"
+herokuAppName in Compile := "connect4htwgws2021"
+herokuJdkVersion in Compile := "1.8"
 
 version := "1.0.0"
 
