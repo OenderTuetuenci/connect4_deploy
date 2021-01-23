@@ -8,47 +8,50 @@ const height = canvas.height;
 const cellwidth = Math.floor(width/7);
 const cellheight = Math.floor(height/6);
 const stoneradius = Math.floor(cellheight/2.5);
-
-let widthlines = [0,0,0,0,0,0];
-let heightlines = [0,0,0,0,0];
 let centerx = []
 let centery = []
 
-let x = Math.floor(cellwidth/2)
-let y = Math.floor(cellheight/2)
-for(let i = 0; i < 7;i++){
-    centerx.push(x);
-    x+=cellwidth;
-}
-for(let i = 0; i < 6;i++){
-    centery.push(y);
-    y+=cellheight;
-}
+function initcanvas(){
+    let widthlines = [0,0,0,0,0,0];
+    let heightlines = [0,0,0,0,0];
 
-let start = 0;
-for(let i = 0; i<widthlines.length;i++){
-    widthlines[i]=start+cellwidth;
-    start+=cellwidth;
-}
+    let x = Math.floor(cellwidth/2)
+    let y = Math.floor(cellheight/2)
+    for(let i = 0; i < 7;i++){
+        centerx.push(x);
+        x+=cellwidth;
+    }
+    for(let i = 0; i < 6;i++){
+        centery.push(y);
+        y+=cellheight;
+    }
 
-start = 0;
-for(let i = 0; i<heightlines.length;i++){
-    heightlines[i]=start+cellheight;
-    start+=cellheight;
-}
+    let start = 0;
+    for(let i = 0; i<widthlines.length;i++){
+        widthlines[i]=start+cellwidth;
+        start+=cellwidth;
+    }
+
+    start = 0;
+    for(let i = 0; i<heightlines.length;i++){
+        heightlines[i]=start+cellheight;
+        start+=cellheight;
+    }
 //Drawing CellBorders
-for(let i = 0; i<widthlines.length;i++){
-    ctx.beginPath();
-    ctx.moveTo(widthlines[i],0);
-    ctx.lineTo(widthlines[i],height);
-    ctx.stroke();
+    for(let i = 0; i<widthlines.length;i++){
+        ctx.beginPath();
+        ctx.moveTo(widthlines[i],0);
+        ctx.lineTo(widthlines[i],height);
+        ctx.stroke();
+    }
+    for(let i = 0; i<heightlines.length;i++){
+        ctx.beginPath();
+        ctx.moveTo(0,heightlines[i]);
+        ctx.lineTo(width,heightlines[i]);
+        ctx.stroke();
+    }
 }
-for(let i = 0; i<heightlines.length;i++){
-    ctx.beginPath();
-    ctx.moveTo(0,heightlines[i]);
-    ctx.lineTo(width,heightlines[i]);
-    ctx.stroke();
-}
+
 function draw(button) {
     $.ajax({
         method: "GET",
@@ -89,9 +92,24 @@ function initbuttons(){
         console.log("b6 pressed")
         draw(6)
     })
+    $("#newgame").click(function (){
+        console.log("newgame pressed")
+        $.ajax({
+            method: "GET",
+            url: "/newgame",
+            dataType: "json",
+
+            success: function (result) {
+                ctx.clearRect(0, 0, width, height);
+                initcanvas()
+                drawCircles(result)
+            }
+        });
+    })
 }
 $(document).ready(function (){
     console.log("Document is ready");
+    initcanvas()
     initbuttons()
     connectWebSocket();
     $.ajax({

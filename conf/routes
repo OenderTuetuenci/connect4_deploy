@@ -41,3 +41,4 @@ GET         /connect4                        controllers.Connect4Controller.conn
 GET         /json/:column                    controllers.Connect4Controller.gridToJsonWithMove(column:Int)
 GET         /json                            controllers.Connect4Controller.gridToJson
 GET         /ws                              controllers.Connect4Controller.socket
+GET         /newgame                         controllers.Connect4Controller.newgame

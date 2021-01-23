@@ -9,6 +9,7 @@ import utils.auth.DefaultEnv
 import javax.inject.{ Inject, Singleton }
 import Connect4._
 import model.gridComponent.GridInterface
+import model.gridComponent.Grid
 import controller.endGameEvent
 import controller.updateGridEvent
 import com.mohiva.play.silhouette.api.actions.SecuredRequest
@@ -27,7 +28,7 @@ class Connect4Controller @Inject() (
   silhouette: Silhouette[DefaultEnv]
 )(implicit ex: ExecutionContext, system: ActorSystem, mat: Materializer) extends SilhouetteController(scc) {
   val gameController = Connect4.controller
-  val grid: GridInterface = gameController.grid
+  var grid: GridInterface = gameController.grid
 
   def aboutpage = SecuredAction.async { implicit request: SecuredRequest[EnvType, AnyContent] =>
     authInfoRepository.find[GoogleTotpInfo](request.identity.loginInfo).map { totpInfoOpt =>
@@ -37,6 +38,13 @@ class Connect4Controller @Inject() (
   def connect4page = SecuredAction.async { implicit request: SecuredRequest[EnvType, AnyContent] =>
     authInfoRepository.find[GoogleTotpInfo](request.identity.loginInfo).map { totpInfoOpt =>
       Ok(connect4(request.identity, totpInfoOpt))
+    }
+  }
+  def newgame = silhouette.SecuredAction { implicit request =>
+    {
+      gameController.grid = new Grid
+      grid = gameController.grid
+      Ok(Json.toJson(grid))
     }
   }
   def gridToJson = silhouette.SecuredAction { implicit request =>
