@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/play-silhouette-seed -Dhttp.port=${PORT} -Dconfig.resource=${PLAY_CONF_FILE}
+web: target/universal/stage/bin/connect4_deploy -Dhttp.port=${PORT} -Dconfig.resource=${PLAY_CONF_FILE}
