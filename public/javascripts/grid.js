@@ -123,7 +123,7 @@ function drawCircles(json){
     }
 }
 function connectWebSocket(){
-    let websocket = new WebSocket("/ws");
+    let websocket = new WebSocket("ws://connect4htwgws2021.herokuapp.com/ws");
     websocket.setTimeout
 
     websocket.onopen = function (){
